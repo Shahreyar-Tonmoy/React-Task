@@ -49,6 +49,7 @@ const Problem2 = () => {
     } else if (path === "/modal-b") {
       openModalB();
     }
+    
   }, []);
 
 
