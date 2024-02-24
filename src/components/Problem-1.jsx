@@ -11,6 +11,7 @@ const Problem1 = () => {
 
     // Add new data to the formData array
     setFormData((prevData) => [...prevData, { name: nameInput, status: statusInput }]);
+    e.target.reset();
   };
 
   const handleClick = (val) => {
