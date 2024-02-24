@@ -1,16 +1,25 @@
+
 import React, { useState } from 'react';
 
 const Problem1 = () => {
   const [formData, setFormData] = useState([]);
   const [show, setShow] = useState('all');
+  const [statusError, setStatusError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const nameInput = e.target[0].value;
-    const statusInput = e.target[1].value;
+    const statusInput = e.target[1].value.toLowerCase(); // Convert to lowercase for case-insensitivity
 
-    // Add new data to the formData array
-    setFormData((prevData) => [...prevData, { name: nameInput, status: statusInput }]);
+    // Check if the status is 'active' or 'completed'
+    if (statusInput === 'active' || statusInput === 'completed') {
+      setFormData((prevData) => [...prevData, { name: nameInput, status: statusInput }]);
+      setStatusError(''); // Clear any previous error
+    } else {
+      setStatusError('Invalid status. Please enter "active" or "completed".');
+    }
+
+    e.target.reset();
   };
 
   const handleClick = (val) => {
@@ -34,12 +43,13 @@ const Problem1 = () => {
       <div className="row justify-content-center mt-5">
         <h4 className="text-center text-uppercase mb-5">Problem-1</h4>
         <div className="col-6">
-          <form className="row gy-2 gx-3 align-items-center mb-4" onSubmit={handleSubmit}>
+          <form className="row gy-2 gx-3 align-items-center mb-2" onSubmit={handleSubmit}>
             <div className="col-auto">
               <input type="text" className="form-control" placeholder="Name" />
             </div>
             <div className="col-auto">
               <input type="text" className="form-control" placeholder="Status" />
+              
             </div>
             <div className="col-auto">
               <button type="submit" className="btn btn-primary">
@@ -47,6 +57,7 @@ const Problem1 = () => {
               </button>
             </div>
           </form>
+          {statusError && <div className="text-danger">{statusError}</div>}
         </div>
         <div className="col-8">
           <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -67,7 +78,7 @@ const Problem1 = () => {
             </li>
           </ul>
           <div className="tab-content"></div>
-          <table className="table table-striped ">
+          <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Name</th>
